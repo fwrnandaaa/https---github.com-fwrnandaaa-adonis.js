@@ -23,6 +23,7 @@ const favoritos= [{ id:1,nome:'Google' ,url:"http://www.google.com", importante:
 
 Route.get('/', async () => {
   return { app: 'favio-back' }
+  
 })
 
 Route.get('/favoritos', async () => {
