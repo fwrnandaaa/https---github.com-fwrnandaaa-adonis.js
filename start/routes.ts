@@ -47,9 +47,44 @@ Route.get('/favoritos/:nome', async ({ params }) => {
 })
 
 //rota post para criar novo favorito
-Route.post('/favoritos', async ({request,response})=>{
-  const {nome,url,importante}=request.body()
-  const newFavorito={id:favoritos.length+1,nome,url,importante}
+Route.post('/favoritos', async ({ request, response }) => {
+  const { nome, url, importante } = request.body()
+  const newFavorito = { id: favoritos.length + 1, nome, url, importante }
   favoritos.push(newFavorito)
   return response.status(201).send(newFavorito)
+})
+
+Route.delete('/favoritos/:id', async ({ response, params }) => {
+  let favorito = favoritos.find((favorito) =>
+    favorito.id == params.id)
+
+  if (favorito != undefined) {
+    const indice = favoritos.indexOf(favorito)
+    favoritos.splice(indice)
+    return response.status(200)
+  } else {
+    return response.status(404)
+  }
+})
+Route.put('/favoritos/:id', async ({ response, params, request }) => {
+  const { nome, url, importante } = request.body()
+  let favorito = favoritos.find((favorito) => favorito.id == params.id)
+  
+  if (favorito !== undefined) {
+    const indice = favoritos.indexOf(favorito)
+    if (nome !== null) {
+      favoritos[indice].nome = nome
+    }
+    if (url !== null) {
+      favoritos[indice].url = url
+    }
+    if (importante !== null) {
+      favoritos[indice].importante = importante
+    }
+
+    // Retorna o favorito atualizado
+    return response.status(200).send(favoritos[indice])
+  } else {
+    return response.status(404)
+  }
 })

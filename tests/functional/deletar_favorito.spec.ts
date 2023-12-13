@@ -6,8 +6,10 @@ const resposta=await client.delete('/favoritos/1')
 resposta.assertStatus(200)
 })
 test('deletar favorito inexistente', async ({client})=> {
-  const resposta=await client.delete('/favoritos/1')
-  resposta.assertStatus(200)
+  const resposta=await client.delete('/favoritos/10')
+  resposta.assertStatus(404)
 })
+
+
 
 })
